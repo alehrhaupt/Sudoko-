@@ -227,17 +227,21 @@ def generate_sudoku(size, removed):
     return board
 
 class Board:
-    def __init__(self, width, height,screen, difficulty):
+    def __init__(self, width, height, screen, difficulty):
         self.width = width
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
         self.rows = 9
-        self.cols = 9 #Sudoku board has 81 cells, 9x9
-        self.width = width
-        self.height = height
-        self.screen = screen
-        self. difficulty = difficulty
-        self.row = 9
-        self.col = 9
+        self.cols = 9
+        self.selected_box = None
+    def draw(self):
+        size_of_box = self.width // self.row #may be wrong, check. Was thinking size of box will be determined by total width of board / self.row
+        for i in range(self.width + 1):
+            pygame.draw.line(self.screen, (0,0,0), (0, i * size_of_box), (self.width, i*size_of_box), 1) #horizontal
+            pygame.draw.line(self.screen, (0,0,0), (i * size_of_box, 0), (i*size_of_box, self.height), 1)#vertical
+    def select(self, row, col):
+        self.selected_box = (row, col)
+
+
 
