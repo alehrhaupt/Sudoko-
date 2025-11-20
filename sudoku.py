@@ -1,5 +1,5 @@
 import pygame
-from sudoku_generator import SudokuGenerator
+# from sudoku_generator import SudokuGenerator
 
 SCREEN_WIDTH  = 600
 SCREEN_HEIGHT = 700
@@ -32,9 +32,22 @@ DIFFICULTY_REMOVED = {
 
 
 def main():
-    try:
-        pygame.init()
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    running = True
+    clock = pygame.time.Clock()
 
-if __name__ == 'main':
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill(BG_COLOR)
+        pygame.display.flip()
+        clock.tick(FPS)
+    pygame.quit()
+
+
+if __name__ == '__main__':
     main()
+
