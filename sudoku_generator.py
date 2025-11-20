@@ -26,6 +26,7 @@ class SudokuGenerator:
         self.row_length = row_length
         self.removed_cells = removed_cells
         self.board = [[0 for col in range(row_length)] for row in range(row_length)]
+        self.box_length = math.sqrt(row_length)
 
 
     '''
@@ -45,7 +46,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        for row in self.board:
+        for row in self.board: #prints row
             print(row)
 
     '''
@@ -59,7 +60,11 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_row(self, row, num):
-        pass
+        for col in range(self.row_length): #loop left to right
+            if self.board[row][col] == num:
+                return False
+
+        return True
 
     '''
 	Determines if num is contained in the specified column (vertical) of the board
@@ -72,7 +77,10 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_col(self, col, num):
-        pass
+        for row in range(self.row_length): #loop top to bottom
+            if self.board[row][col] == num:
+                return False
+        return True
 
     '''
 	Determines if num is contained in the 3x3 box specified on the board
