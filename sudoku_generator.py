@@ -1,5 +1,5 @@
 import math,random
-
+import pygame
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
 https://www.geeksforgeeks.org/program-sudoku-generator/
@@ -26,6 +26,7 @@ class SudokuGenerator:
         self.row_length = row_length
         self.removed_cells = removed_cells
         self.board = [[0 for col in range(row_length)] for row in range(row_length)]
+        self.box_length = math.sqrt(row_length)
 
     '''
 	Returns a 2D python list of numbers which represents the board
@@ -44,7 +45,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        for row in self.board:
+        for row in self.board: #prints row
             print(row)
 
     '''
@@ -58,7 +59,11 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_row(self, row, num):
-        pass
+        for col in range(self.row_length): #loop left to right
+            if self.board[row][col] == num:
+                return False
+
+        return True
 
     '''
 	Determines if num is contained in the specified column (vertical) of the board
@@ -71,7 +76,10 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_col(self, col, num):
-        pass
+        for row in range(self.row_length): #loop top to bottom
+            if self.board[row][col] == num:
+                return False
+        return True
 
     '''
 	Determines if num is contained in the 3x3 box specified on the board
@@ -86,7 +94,11 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_box(self, row_start, col_start, num):
-        pass
+        for row in range(row_start, row_start+3): #loop from start of row to end
+            for col in range(col_start, col_start+3): #loop from start of col to end
+                if self.board[row][col] == num: #if the num being checked equals num then False
+                    return False
+        return True
     
     '''
     Determines if it is valid to enter num at (row, col) in the board
@@ -233,3 +245,19 @@ def generate_sudoku(size, removed):
     sudoku.remove_cells()
     board = sudoku.get_board()
     return board
+
+class Board:
+    def __init__(self, width, height,screen, difficulty):
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+        self.rows = 9
+        self.cols = 9 #Sudoku board has 81 cells, 9x9
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self. difficulty = difficulty
+        self.row = 9
+        self.col = 9
+
