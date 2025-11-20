@@ -112,7 +112,18 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        pass
+        if not self.valid_in_row(row, num):
+            return False
+        if not self.valid_in_col(col, num):
+            return False
+
+        box_row_start = (row // 3) * 3
+        box_col_start = (col // 3) * 3
+
+        if not self.valid_in_box(box_row_start, box_col_start, num):
+            return False
+
+        return True
 
     '''
     Fills the specified 3x3 box with values
@@ -125,7 +136,9 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        pass
+        numbers = [1,2,3,4,5,6,7,8,9]
+        random.shuffle(numbers)
+
     
     '''
     Fills the three boxes along the main diagonal of the board
