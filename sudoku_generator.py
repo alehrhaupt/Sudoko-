@@ -1,5 +1,5 @@
 import math,random
-
+import pygame
 """
 This was adapted from a GeeksforGeeks article "Program for Sudoku Generator" by Aarti_Rathi and Ankur Trisal
 https://www.geeksforgeeks.org/program-sudoku-generator/
@@ -225,3 +225,19 @@ def generate_sudoku(size, removed):
     sudoku.remove_cells()
     board = sudoku.get_board()
     return board
+
+class Board:
+    def __init__(self, width, height,screen, difficulty):
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self.difficulty = difficulty
+        self.rows = 9
+        self.cols = 9 #Sudoku board has 81 cells, 9x9
+        self.width = width
+        self.height = height
+        self.screen = screen
+        self. difficulty = difficulty
+        self.row = 9
+        self.col = 9
+
