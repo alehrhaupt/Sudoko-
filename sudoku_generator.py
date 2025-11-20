@@ -222,22 +222,23 @@ class Cell:
         self.col = col
         self.screen = screen
         self.selected = False
-        self. rect = pygame.rect()
+        self.square = pygame.rect(self.row, self.col, 20, 20) #this creates individual cell squares(IDK what size to make them)
 
     def set_cell_value(self, value):
         self.value = value
-        return self.value
 
     def set_sketched_value(self, value):
         self.value = value
-        return self.value
 
     def draw(self):
         outline_color = (255, 0, 0) if self.selected else (0, 0, 0)
-        pygame.draw.rect(self.screen, outline_color, self.rect, 2)
+        pygame.draw.rect(self.screen, outline_color, self.square, 2)
         if self.value != 0:
-            self.screen.blit(text_surface, text_rect)
-
+            self.screen.blit(pygame.font.Font.render(str(self.value), True, (0, 0, 0)), text_surface.get_rect(center=self.rect.center))
+            # this line should print the value that goes into the cell squares
+        else:
+            self.screen.blit(pygame.font.Font.render("", True, (0, 0, 0)), text_surface.get_rect(center=self.rect.center))
+            # this line should print empty squares when the value is = 0
 
 
 
