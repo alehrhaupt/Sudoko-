@@ -27,7 +27,6 @@ class SudokuGenerator:
         self.removed_cells = removed_cells
         self.board = [[0 for col in range(row_length)] for row in range(row_length)]
 
-
     '''
 	Returns a 2D python list of numbers which represents the board
 
@@ -190,6 +189,27 @@ class SudokuGenerator:
     '''
     def remove_cells(self):
         pass
+
+class Cell:
+    def __init__(self,  value, row, col, screen):
+        self.value = value
+        self.row = row
+        self.col = col
+        self.screen = screen
+
+    def set_cell_value(self, value):
+        self.value = value
+        return self.value
+
+    def set_sketched_value(self, value):
+        self.value = value
+        return self.value
+
+    def draw(self):
+        input_box = pygame.Rect(100, 100, self.row, self.col)
+        if self.value != 0:
+
+
 
 '''
 DO NOT CHANGE
