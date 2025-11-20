@@ -28,7 +28,6 @@ class SudokuGenerator:
         self.board = [[0 for col in range(row_length)] for row in range(row_length)]
         self.box_length = math.sqrt(row_length)
 
-
     '''
 	Returns a 2D python list of numbers which represents the board
 
@@ -216,6 +215,32 @@ class SudokuGenerator:
     def remove_cells(self):
         pass
 
+class Cell:
+    def __init__(self,  value, row, col, screen):
+        self.value = value
+        self.row = row
+        self.col = col
+        self.screen = screen
+        self.selected = False
+        self. rect = pygame.rect()
+
+    def set_cell_value(self, value):
+        self.value = value
+        return self.value
+
+    def set_sketched_value(self, value):
+        self.value = value
+        return self.value
+
+    def draw(self):
+        outline_color = (255, 0, 0) if self.selected else (0, 0, 0)
+        pygame.draw.rect(self.screen, outline_color, self.rect, 2)
+        if self.value != 0:
+            self.screen.blit(text_surface, text_rect)
+
+
+
+
 '''
 DO NOT CHANGE
 Provided for students
@@ -240,17 +265,21 @@ def generate_sudoku(size, removed):
     return board
 
 class Board:
-    def __init__(self, width, height,screen, difficulty):
+    def __init__(self, width, height, screen, difficulty):
         self.width = width
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
         self.rows = 9
-        self.cols = 9 #Sudoku board has 81 cells, 9x9
-        self.width = width
-        self.height = height
-        self.screen = screen
-        self. difficulty = difficulty
-        self.row = 9
-        self.col = 9
+        self.cols = 9
+        self.selected_box = None
+    def draw(self):
+        size_of_box = self.width // self.row #may be wrong, check. Was thinking size of box will be determined by total width of board / self.row
+        for i in range(self.width + 1):
+            pygame.draw.line(self.screen, (0,0,0), (0, i * size_of_box), (self.width, i*size_of_box), 1) #horizontal
+            pygame.draw.line(self.screen, (0,0,0), (i * size_of_box, 0), (i*size_of_box, self.height), 1)#vertical
+    def select(self, row, col):
+        self.selected_box = (row, col)
+
+
 
