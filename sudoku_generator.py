@@ -208,6 +208,8 @@ class Cell:
         self.row = row
         self.col = col
         self.screen = screen
+        self.selected = False
+        self. rect = pygame.rect()
 
     def set_cell_value(self, value):
         self.value = value
@@ -218,8 +220,11 @@ class Cell:
         return self.value
 
     def draw(self):
-        input_box = pygame.Rect(100, 100, self.row, self.col)
+        outline_color = (255, 0, 0) if self.selected else (0, 0, 0)
+        pygame.draw.rect(self.screen, outline_color, self.rect, 2)
         if self.value != 0:
+            self.screen.blit(text_surface, text_rect)
+
 
 
 
