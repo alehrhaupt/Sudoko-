@@ -288,6 +288,8 @@ class Board:
             return (row, col)
         else:
             return None
+    def clear(self):
+
 
             
 
