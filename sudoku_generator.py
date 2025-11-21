@@ -218,28 +218,33 @@ class SudokuGenerator:
 class Cell:
     def __init__(self,  value, row, col, screen):
         self.value = value
+        self.sketched_value = 0
         self.row = row
         self.col = col
         self.screen = screen
         self.selected = False
-        self.square = pygame.rect(self.row, self.col, 20, 20) #this creates individual cell squares(IDK what size to make them)
+        self.square = pygame.Rect(self.row, self.col, 20, 20) #this creates individual cell squares(IDK what size to make them)
+        self.font = pygame.font.Font(None, 36)
 
     def set_cell_value(self, value):
         self.value = value
 
     def set_sketched_value(self, value):
-        self.value = value
+        self.sketched_value = value
 
     def draw(self):
         outline_color = (255, 0, 0) if self.selected else (0, 0, 0)
         pygame.draw.rect(self.screen, outline_color, self.square, 2)
         if self.value != 0:
-            self.screen.blit(pygame.font.Font.render(str(self.value), True, (0, 0, 0)), text_surface.get_rect(center=self.rect.center))
-            # this line should print the value that goes into the cell squares
+            text_square = self.font.render(str(self.value), True, (0, 0, 0))
+            self.screen.blit(text_square, text_square.get_rect(center=self.square.center))
+            # this line should print the value that goes into the cell squares, pygame.font prints the value, text_surface is the box
+            # which i think can be edited
         else:
-            self.screen.blit(pygame.font.Font.render("", True, (0, 0, 0)), text_surface.get_rect(center=self.rect.center))
-            # this line should print empty squares when the value is = 0
-
+            text_square = self.font.render(str(self.sketched_value), True, (0, 0, 0))
+            self.screen.blit(text_square, text_square.get_rect(center=self.square.center))
+            # this line should print empty squares when the value is = 0, pygame.font prints the value, text_surface is the box
+            # which i think can be edited
 
 
 '''
