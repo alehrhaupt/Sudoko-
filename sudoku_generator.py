@@ -295,32 +295,47 @@ class Board:
         self.difficulty = difficulty
         self.rows = 9
         self.cols = 9
-        self.selected_box = False
-        self.sketched_value = 0
+        self.full = False
+        self.selected_box = None
     def draw(self):
         size_of_box = self.width // self.rows #may be wrong, check. Was thinking size of box will be determined by total width of board / self.row
         for i in range(self.rows + 1):
-            pygame.draw.line(self.screen, (0,0,0), (0, i * size_of_box), (self.width, i*size_of_box), 1) #horizontal
-            pygame.draw.line(self.screen, (0,0,0), (i * size_of_box, 0), (i*size_of_box, self.height), 1)#vertical
+            if i%3 == 0:
+                pygame.draw.line(self.screen, (0,0,0), (0, i * size_of_box), (self.width, i*size_of_box), 2) #horizontal
+                pygame.draw.line(self.screen, (0,0,0), (i * size_of_box, 0), (i*size_of_box, self.height), 2)#vertical
+            else:
+                pygame.draw.line(self.screen, (0,0,0), (0, i * size_of_box), (self.width, i*size_of_box), 1) #horizontal
+                pygame.draw.line(self.screen, (0,0,0), (i * size_of_box, 0), (i*size_of_box, self.height), 1)#vertical
     def select(self, row, col):
         self.selected_box = (row, col)
     def click(self, x, y):
-        if x>=0 and x<self.width and y>=0 and y<self.cols:
+        if 0<=x<self.width and 0<=y<self.height:
             size_of_box = self.width // self.rows
             row = y // size_of_box
             col = x // size_of_box # put row as y and col as x as a roy is vertical movement, thus y. Could make it wrong so check.
             return (row, col)
         else:
             return None
-    #def clear(self):
-        if self.selected_box:
-            (row, col) = self.selected_box
-            self.selected_box(row, col) == 0
-    #def sketch(self, value):
-        self.sketched_value = value
-    #def place_number(self, value):
-        self.selected_box = value
-    def reset_to_original(self):
+    def is_full(self):
+        if self.full:
+            return True
+        return False
+    def find_board(self):
+
+
+
+
+    def clear(self):
+        if self.selected_box is None:
+            return
+
+        row, col = self.selected_box
+        self.cells[row][col] = 0
+
+
+
+
+
 
 
 
