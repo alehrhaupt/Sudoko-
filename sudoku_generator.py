@@ -320,6 +320,14 @@ class Board:
             return True
         return False
 
+    def clear(self):
+        if self.selected_box is None:
+            return
+
+        row, col = self.selected_box
+        self.cells[row][col] = 0
+
+
 
 
 
