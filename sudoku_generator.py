@@ -273,7 +273,8 @@ class Board:
         self.difficulty = difficulty
         self.rows = 9
         self.cols = 9
-        self.selected_box = None
+        self.selected_box = False
+        self.sketched_value = 0
     def draw(self):
         size_of_box = self.width // self.rows #may be wrong, check. Was thinking size of box will be determined by total width of board / self.row
         for i in range(self.rows + 1):
@@ -289,7 +290,23 @@ class Board:
             return (row, col)
         else:
             return None
-    def clear(self):
+    #def clear(self):
+        if self.selected_box:
+            (row, col) = self.selected_box
+            self.selected_box(row, col) == 0
+    #def sketch(self, value):
+        self.sketched_value = value
+    #def place_number(self, value):
+        self.selected_box = value
+    def reset_to_original(self):
+
+
+
+
+
+
+
+
 
 
             
