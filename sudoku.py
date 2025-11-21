@@ -28,10 +28,14 @@ DIFFICULTY = {
     "hard": 50
 }
 
-def gen_start_screen():
-     start_screen = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-     pygame.draw.rect(screen, sudoku_start_bg.jpg, start_screen)
-
+def gen_start_screen(screen):
+    start_screen = pygame.image.load('sudoku_start_bg.jpg')
+    start_screen = pygame.transform.scale(start_screen, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen.blit(start_screen,(0, 0))
+    font = pygame.font.SysFont(None, TITLE_FONT_SIZE)
+    title_surface = font.render("Welcome to Sudoku", True, TXT_COLOR)
+    title_rect = title_surface.get_rect(center=(SCREEN_WIDTH//2, 150))
+    screen.blit(title_surface, title_rect)
 
 
 
@@ -47,7 +51,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill(BG_COLOR)
+        gen_start_screen(screen)
         pygame.display.flip()
         clock.tick(FPS)
     pygame.quit()
