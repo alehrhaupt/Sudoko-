@@ -26,7 +26,7 @@ class SudokuGenerator:
         self.row_length = row_length
         self.removed_cells = removed_cells
         self.board = [[0 for col in range(row_length)] for row in range(row_length)]
-        self.box_length = math.sqrt(row_length)
+        self.box_length = int(math.sqrt(row_length))
 
     '''
 	Returns a 2D python list of numbers which represents the board
@@ -138,6 +138,12 @@ class SudokuGenerator:
         numbers = [1,2,3,4,5,6,7,8,9]
         random.shuffle(numbers)
 
+        index = 0
+        for row in range(row_start, row_start+3):
+            for col in range(col_start, col_start+3):
+                self.board[row][col] = numbers[index]
+                index += 1
+
     
     '''
     Fills the three boxes along the main diagonal of the board
@@ -147,7 +153,9 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        pass
+        for i in range(0, self.row_length, self.box_length):
+            self.fill_box(i, i)
+
 
     '''
     DO NOT CHANGE
@@ -213,7 +221,16 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-        pass
+        count_cells = self.removed_cells
+
+        while count_cells > 0:
+            row = random.randint(0, self.row_length - 1)
+            col = random.randint(0, self.row_length - 1)
+
+            if self.board[row][col] != 0:
+                self.board[row][col] = 0
+                count_cells -= 1
+
 
 class Cell:
     def __init__(self,  value, row, col, screen):
@@ -273,7 +290,8 @@ class Board:
         self.difficulty = difficulty
         self.rows = 9
         self.cols = 9
-        self.selected_box = None
+        self.selected_box = False
+        self.sketched_value = 0
     def draw(self):
         size_of_box = self.width // self.rows #may be wrong, check. Was thinking size of box will be determined by total width of board / self.row
         for i in range(self.rows + 1):
@@ -289,7 +307,23 @@ class Board:
             return (row, col)
         else:
             return None
-    def clear(self):
+    #def clear(self):
+        if self.selected_box:
+            (row, col) = self.selected_box
+            self.selected_box(row, col) == 0
+    #def sketch(self, value):
+        self.sketched_value = value
+    #def place_number(self, value):
+        self.selected_box = value
+    def reset_to_original(self):
+
+
+
+
+
+
+
+
 
 
             
