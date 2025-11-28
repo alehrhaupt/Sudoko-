@@ -10,7 +10,8 @@ BOARD_LEFT = (SCREEN_WIDTH - BOARD_SIZE) // 2
 
 FPS = 60
 
-BACKGROUND_COL = (255, 255, 255)
+WHITE = (255, 255, 255)
+GRAY = (211, 211, 211)
 GRID_COL = (0, 0, 0)
 BOLD_GRID_COL = (0, 0, 0)
 SELECTED_COL = (255, 0, 0)
@@ -42,6 +43,9 @@ def gen_start_screen(screen):
     select_mode_rect = select_mode_surface.get_rect(center=(SCREEN_WIDTH//2, 300))
     screen.blit(select_mode_surface, select_mode_rect)
 
+def gen_play_screen(screen):
+    screen.fill(GRAY)
+
 
 
 
@@ -52,6 +56,8 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     running = True
     clock = pygame.time.Clock()
+    game_state = 'STARTING'
+    diff = None
     easy_butt = pygame.Rect((SCREEN_WIDTH - BUTTON_WIDTH) // 2, 380, BUTTON_WIDTH, BUTTON_HEIGHT)
     medium_butt = pygame.Rect((SCREEN_WIDTH - BUTTON_WIDTH) // 2, 460, BUTTON_WIDTH, BUTTON_HEIGHT)
     hard_butt = pygame.Rect((SCREEN_WIDTH - BUTTON_WIDTH) // 2, 540, BUTTON_WIDTH, BUTTON_HEIGHT)
@@ -59,18 +65,60 @@ def main():
 
 
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
 
-        gen_start_screen(screen)
-        pygame.draw.rect(screen, BUTTON_COL, easy_butt)
-        pygame.draw.rect(screen, BUTTON_COL, medium_butt)
-        pygame.draw.rect(screen, BUTTON_COL, hard_butt)
-        easy_txt = button_font.render('Easy', True, TXT_COLOR )
+        if game_state == 'STARTING':
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
 
-        pygame.display.flip()
-        clock.tick(FPS)
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if easy_butt.collidepoint(event.pos):
+                        game_state = 'PLAYING'
+                        diff = 'EASY'
+                        print('Easy selected')
+
+                    if medium_butt.collidepoint(event.pos):
+                        game_state = 'PLAYING'
+                        diff = 'MEDIUM'
+                        print('Medium selected')
+
+                    if hard_butt.collidepoint(event.pos):
+                        game_state = 'PLAYING'
+                        diff = 'HARD'
+                        print('Hard selected')
+
+            gen_start_screen(screen)
+            pygame.draw.rect(screen, BUTTON_COL, easy_butt)
+            pygame.draw.rect(screen, BUTTON_COL, medium_butt)
+            pygame.draw.rect(screen, BUTTON_COL, hard_butt)
+
+            easy_txt = button_font.render('Easy', True, TXT_COLOR )
+            easy_txt_rect = (easy_txt.get_rect(center=easy_butt.center))
+            screen.blit(easy_txt, easy_txt_rect)
+
+            medium_txt = button_font.render('Medium', True, TXT_COLOR)
+            medium_txt_rect = (medium_txt.get_rect(center=medium_butt.center))
+            screen.blit(medium_txt, medium_txt_rect)
+
+            hard_txt = button_font.render('Hard', True, TXT_COLOR)
+            hard_txt_rect = (hard_txt.get_rect(center=hard_butt.center))
+            screen.blit(hard_txt, hard_txt_rect)
+
+            pygame.display.flip()
+            clock.tick(FPS)
+
+        if game_state == 'PLAYING':
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+            gen_play_screen(screen)
+            pygame.display.flip()
+            clock.tick(FPS)
+
+
+
+
     pygame.quit()
 
 
