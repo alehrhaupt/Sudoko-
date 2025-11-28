@@ -297,6 +297,7 @@ class Board:
         self.cols = 9
         self.full = False
         self.selected_box = None
+        self.board = [[Board(witdth, height, screen) for col in range(self.cols)] for row in range(self.rows)]
     def draw(self):
         size_of_box = self.width // self.rows #may be wrong, check. Was thinking size of box will be determined by total width of board / self.row
         for i in range(self.rows + 1):
@@ -316,6 +317,11 @@ class Board:
             return (row, col)
         else:
             return None
+    def clear:
+        if self.selected_box is None:
+            pass
+        if self.selected_box is not None:
+            for (row,col) in self.board:
     def is_full(self):
         if self.full:
             return True
